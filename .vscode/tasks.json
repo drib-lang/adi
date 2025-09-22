@@ -1,0 +1,23 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "format code",
+            "type": "shell",
+            "command": "ktlint --format",
+            "problemMatcher": []
+        },
+        {
+            "label": "run interpreter",
+            "type": "shell",
+            "command": "ktlint --format; kotlinc -script src/drib.kts",
+            "problemMatcher": []
+        },
+        {
+            "label": "run tests",
+            "type": "shell",
+            "command": "ktlint --format; cat src/drib.kts test/test.kts > temp.kts && kotlinc -J-ea -script temp.kts; rm temp.kts",
+            "problemMatcher": []
+        }
+    ]
+}
