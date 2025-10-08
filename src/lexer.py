@@ -31,6 +31,14 @@ class Lexer:
             self.read_char()
         return self.input[pos : self.position]
 
+    def read_string(self):
+        pos = self.position + 1
+        while True:
+            self.read_char()
+            if self.ch == '"' or self.ch == "":
+                break
+        return self.input[pos : self.position]
+
     def lookup_ident(self, ident: str):
         keywords = {
             "fun": TokenType.TT_FUNCTION,
@@ -62,6 +70,8 @@ class Lexer:
                 tok = Token(TokenType.TT_LBRACE, self.ch)
             case "}":
                 tok = Token(TokenType.TT_RBRACE, self.ch)
+            case '"':
+                tok = Token(TokenType.TT_STRING, self.read_string())
             case "\0":
                 tok = Token(TokenType.TT_EOF, "")
             case _:

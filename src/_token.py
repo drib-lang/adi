@@ -17,7 +17,7 @@ class TokenType:
     TT_LBRACKET = "LBRACKET"
     TT_RBRACKET = "RBRACKET"
 
-    # keywords
+    # keywords and types (true, false, string)
     TT_FUNCTION = "FUNCTION"
     TT_VAL = "VAL"
     TT_RETURN = "RETURN"
@@ -25,6 +25,7 @@ class TokenType:
     TT_ELSE = "ELSE"
     TT_TRUE = "TRUE"
     TT_FALSE = "FALSE"
+    TT_STRING = "STRING"
 
 
 class Token:
