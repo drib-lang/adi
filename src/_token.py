@@ -1,40 +1,39 @@
 class TokenType:
-    TT_EOF = "EOF"
-    TT_ILLEGAL = "ILLEGAL"
+    EOF = "EOF"
+    ILLEGAL = "ILLEGAL"
 
     # identifiers + literals
-    TT_ASSIGN = "ASSIGN"
-    TT_IDENTIFIER = "IDENTIFIER"
+    ASSIGN = "ASSIGN"
+    IDENTIFIER = "IDENTIFIER"
 
     # delimiters
-    TT_COMMA = "COMMA"
-    TT_SEMICOLON = "SEMICOLON"
-
-    TT_LPAREN = "LPAREN"
-    TT_RPAREN = "RPAREN"
-    TT_LBRACE = "LBRACE"
-    TT_RBRACE = "RBRACE"
-    TT_LBRACKET = "LBRACKET"
-    TT_RBRACKET = "RBRACKET"
+    COMMA = "COMMA"
+    SEMICOLON = "SEMICOLON"
+    LPAREN = "LPAREN"
+    RPAREN = "RPAREN"
+    LBRACE = "LBRACE"
+    RBRACE = "RBRACE"
+    LBRACKET = "LBRACKET"
+    RBRACKET = "RBRACKET"
 
     # keywords and types (true, false, string)
-    TT_FUNCTION = "FUNCTION"
-    TT_VAL = "VAL"
-    TT_RETURN = "RETURN"
-    TT_IF = "IF"
-    TT_ELSE = "ELSE"
-    TT_TRUE = "TRUE"
-    TT_FALSE = "FALSE"
-    TT_STRING = "STRING"
+    FUNCTION = "FUNCTION"
+    VAL = "VAL"
+    RETURN = "RETURN"
+    IF = "IF"
+    ELSE = "ELSE"
+    TRUE = "TRUE"
+    FALSE = "FALSE"
+    STRING = "STRING"
 
 
 class Token:
-    def __init__(self, type_: str, literal: str):
-        self.type = type_
+    def __init__(self, token_type: str, literal: str):
+        self.token_type = token_type
         self.literal = literal
 
     def __repr__(self):
-        return f'{{"type": "{self.type}", "literal": "{self.literal}"}}'
+        return f'{{"type": "{self.token_type}", "literal": "{self.literal}"}}'
 
     def __str__(self):
-        return f'{{"type": "{self.type}", "literal": "{self.literal}"}}'
+        return f'{{"type": "{self.token_type}", "literal": "{self.literal}"}}'

@@ -27,6 +27,6 @@ while True:
     tok = lexer.next_token()
     print(tok)
 
-    while tok.type != TokenType.TT_EOF:
+    while tok.token_type != TokenType.EOF:
         tok = lexer.next_token()
         print(tok)

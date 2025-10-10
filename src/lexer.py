@@ -3,53 +3,53 @@ from _token import TokenType
 
 
 class Lexer:
-    def __init__(self, _input: str):
-        self.input = _input
-        self.position = 0  # current position in input (points to current char)
-        self.read_position = 0  # current reading position in input (after current char)
+    def __init__(self, text: str):
+        self.text = text
+        self.position = 0  # current position in text (points to current char)
+        self.read_position = 0  # current reading position in text (after current char)
         self.ch = ""  # current char under examination
         self.read_char()
 
     def read_char(self):
-        if self.read_position >= len(self.input):
+        if self.read_position >= len(self.text):
             self.ch = "\0"
         else:
-            self.ch = self.input[self.read_position]
+            self.ch = self.text[self.read_position]
         self.position = self.read_position
         self.read_position += 1
 
     def skip_whitespace(self):
-        while self.ch == " " or self.ch == "\t" or self.ch == "\n" or self.ch == "\r":
+        while self.ch in " \t\n\r":
             self.read_char()
 
     def is_letter(self, ch: str):
-        return "a" <= ch <= "z" or "A" <= ch <= "Z" or ch == "_"
+        return ch.isalpha() or ch == "_"
 
     def read_identifier(self):
-        pos = self.position
+        start = self.position
         while self.is_letter(self.ch):
             self.read_char()
-        return self.input[pos : self.position]
+        return self.text[start : self.position]
 
     def read_string(self):
-        pos = self.position + 1
+        start = self.position + 1
         while True:
             self.read_char()
             if self.ch == '"' or self.ch == "":
                 break
-        return self.input[pos : self.position]
+        return self.text[start : self.position]
 
     def lookup_ident(self, ident: str):
         keywords = {
-            "fun": TokenType.TT_FUNCTION,
-            "val": TokenType.TT_VAL,
-            "return": TokenType.TT_RETURN,
-            "if": TokenType.TT_IF,
-            "else": TokenType.TT_ELSE,
-            "true": TokenType.TT_TRUE,
-            "false": TokenType.TT_FALSE,
+            "fun": TokenType.FUNCTION,
+            "val": TokenType.VAL,
+            "return": TokenType.RETURN,
+            "if": TokenType.IF,
+            "else": TokenType.ELSE,
+            "true": TokenType.TRUE,
+            "false": TokenType.FALSE,
         }
-        return keywords.get(ident, TokenType.TT_IDENTIFIER)
+        return keywords.get(ident, TokenType.IDENTIFIER)
 
     def next_token(self):
         self.skip_whitespace()
@@ -57,30 +57,30 @@ class Lexer:
 
         match self.ch:
             case "=":
-                tok = Token(TokenType.TT_ASSIGN, self.ch)
+                tok = Token(TokenType.ASSIGN, self.ch)
             case ";":
-                tok = Token(TokenType.TT_SEMICOLON, self.ch)
+                tok = Token(TokenType.SEMICOLON, self.ch)
             case "(":
-                tok = Token(TokenType.TT_LPAREN, self.ch)
+                tok = Token(TokenType.LPAREN, self.ch)
             case ")":
-                tok = Token(TokenType.TT_RPAREN, self.ch)
+                tok = Token(TokenType.RPAREN, self.ch)
             case ",":
-                tok = Token(TokenType.TT_COMMA, self.ch)
+                tok = Token(TokenType.COMMA, self.ch)
             case "{":
-                tok = Token(TokenType.TT_LBRACE, self.ch)
+                tok = Token(TokenType.LBRACE, self.ch)
             case "}":
-                tok = Token(TokenType.TT_RBRACE, self.ch)
+                tok = Token(TokenType.RBRACE, self.ch)
             case '"':
-                tok = Token(TokenType.TT_STRING, self.read_string())
+                tok = Token(TokenType.STRING, self.read_string())
             case "\0":
-                tok = Token(TokenType.TT_EOF, "")
+                tok = Token(TokenType.EOF, "")
             case _:
                 if self.is_letter(self.ch):
                     literal = self.read_identifier()
                     tok = Token(self.lookup_ident(literal), literal)
                     return tok
                 else:
-                    tok = Token(TokenType.TT_ILLEGAL, self.ch)
+                    tok = Token(TokenType.ILLEGAL, self.ch)
 
         self.read_char()
         return tok
