@@ -25,8 +25,10 @@ while True:
 
     lexer = Lexer(scanned)
     tok = lexer.next_token()
-    print(tok)
+    tokens = [tok]
 
     while tok.token_type != TokenType.EOF:
         tok = lexer.next_token()
-        print(tok)
+        tokens.append(tok)
+
+    print(tokens)
