@@ -1,0 +1,14 @@
+val arr = array("0", "1", "2", "3");
+println(arr); // "0", "1", "2", "3"
+
+pop(arr);
+println(arr); // "0", "1", "2"
+
+shift(arr);
+println(arr); // "1", "2"
+
+push(arr, "9");
+println(arr); // "1", "2", "9"
+
+unshift(arr, "8");
+println(arr); // "8", "1", "2", "9"

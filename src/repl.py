@@ -30,5 +30,3 @@ while True:
     while tok.token_type != TokenType.EOF:
         tok = lexer.next_token()
         tokens.append(tok)
-
-    print(tokens)
