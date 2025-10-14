@@ -1,14 +1,23 @@
-val arr = array("0", "1", "2", "3");
-println(arr); // array(4) ["0", "1", "2", "3"]
+$arr = list("0", "1", "2", "3");
+println($arr); // list(4) ["0", "1", "2", "3"]
 
-pop(arr);
-println(arr); // array(3) ["0", "1", "2"]
+pop($arr);
+println($arr); // list(3) ["0", "1", "2"]
 
-shift(arr);
-println(arr); // array(2) ["1", "2"]
+shift($arr);
+println($arr); // list(2) ["1", "2"]
 
-push(arr, "9");
-println(arr); // array(3) ["1", "2", "9"]
+push($arr, "9");
+println($arr); // list(3) ["1", "2", "9"]
 
-unshift(arr, "8");
-println(arr); // array(4) ["8", "1", "2", "9"]
+unshift($arr, "8");
+println($arr); // list(4) ["8", "1", "2", "9"]
+
+get($arr, "0"); // "8"
+get($arr, "9"); // list index out of range
+
+set($arr, "0", "4");
+println($arr); // list(4) ["4", "1", "2", "9"]
+
+index_of($arr, "9") // "3"
+index_of($arr, "8") // nil

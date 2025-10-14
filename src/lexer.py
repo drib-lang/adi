@@ -44,8 +44,8 @@ class Lexer:
             "fun": TokenType.FUNCTION,
             "val": TokenType.VAL,
             "return": TokenType.RETURN,
-            "if": TokenType.IF,
-            "else": TokenType.ELSE,
+            "when": TokenType.WHEN,
+            "otherwise": TokenType.OTHERWISE,
             "true": TokenType.TRUE,
             "false": TokenType.FALSE,
         }

@@ -9,12 +9,10 @@ class TokenType:
     # delimiters
     COMMA = "COMMA"
     SEMICOLON = "SEMICOLON"
-    LPAREN = "LPAREN"
-    RPAREN = "RPAREN"
-    LBRACE = "LBRACE"
-    RBRACE = "RBRACE"
-    LBRACKET = "LBRACKET"
-    RBRACKET = "RBRACKET"
+    LPAREN = "("
+    RPAREN = ")"
+    LBRACE = "{"
+    RBRACE = "}"
 
     # keywords and types (true, false, string)
     FUNCTION = "FUNCTION"
@@ -25,6 +23,7 @@ class TokenType:
     TRUE = "TRUE"
     FALSE = "FALSE"
     STRING = "STRING"
+    NIL = "NIL"
 
 
 class Token:

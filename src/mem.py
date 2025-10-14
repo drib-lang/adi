@@ -1,5 +1,5 @@
 class Value:
-    def __init__(self, name, type_, value):
+    def __init__(self, name, type_, value: str | bool | function | None):
         self.name = name
         self.type = type_
         self.value = value

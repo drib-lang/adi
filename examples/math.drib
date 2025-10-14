@@ -1,0 +1,11 @@
+val a = sum("5", "6");
+println(a); // "11"
+
+val b = sub("7", "9");
+println(a); // "-2"
+
+val c = mul("2", "5");
+println(a); // "10"
+
+val d = div("4", "16");
+println(a); // "0.25"
