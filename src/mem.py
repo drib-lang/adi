@@ -1,5 +1,8 @@
+from collections.abc import Callable
+
+
 class Value:
-    def __init__(self, name, type_, value: str | bool | function | None):
+    def __init__(self, name, type_, value: str | bool | Callable | None):
         self.name = name
         self.type = type_
         self.value = value
