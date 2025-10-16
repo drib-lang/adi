@@ -16,12 +16,12 @@ print("⣀⣴⢟⡋⣠⡴⡟⡷⣤⣀⢀⢀⢀⢀⢀⢀⢀⢀⣠⣴⡞⢁⢀⢀�
 print("⢻⢾⣯⢾⢋⢀⢀⢀⡈⡙⢻⡶⡶⡶⡶⢶⡞⡛⢋⢁⢀⢀⢀⢀⢀")
 print("⢀⢀⢀⢀⢀⢀⢀⢀⢀⡶⡶⢿⡶⢆⡰⡶⢿⡶⡶⢄⢀⢀⢀⢀⢀")
 print("⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀")
+print("(type 'exit' or 'quit' to leave)")
 
 while True:
     scanned = input(">>> ").strip()
 
     if scanned in ("exit", "quit"):
-        print("Exiting...")
         break
 
     lexer = Lexer(scanned)
@@ -33,7 +33,5 @@ while True:
         if tok.token_type == TokenType.EOF:
             break
 
-    print("Tokens:", tokens)
-
-    # parser = Parser(tokens)
-    # parser.parse_program()
+    parser = Parser(tokens)
+    parser.parse_program()

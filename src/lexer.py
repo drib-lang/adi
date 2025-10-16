@@ -1,3 +1,4 @@
+from error import errors
 from _token import Token
 from _token import TokenType
 
@@ -81,6 +82,6 @@ class Lexer:
                     return tok
                 else:
                     tok = Token(TokenType.ILLEGAL, self.ch)
-
+                    errors.append(f"Illegal character: {self.ch}")
         self.read_char()
         return tok

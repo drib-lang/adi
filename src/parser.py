@@ -1,4 +1,6 @@
+from error import errors
 from mem import Value, stack
+from statement import Statement
 from _token import Token, TokenType
 
 
@@ -7,45 +9,38 @@ class Parser:
         self.tokens = tokens
         self.current_token: Token | None = None
         self.peek_token: Token | None = None
-        self.following_tokens = {
-            TokenType.VAL: [TokenType.IDENTIFIER],
-            TokenType.IDENTIFIER: [
-                TokenType.ASSIGN,  # a =
-                TokenType.LPAREN,  # a (
-                TokenType.COMMA,  # a, b
-                TokenType.RPAREN,  # a)
-                TokenType.SEMICOLON,  # a;
-            ],
-            TokenType.ASSIGN: [
-                TokenType.IDENTIFIER,  # a = b
-                TokenType.STRING,  # a = "string"
-                TokenType.TRUE,  # a = true
-                TokenType.FALSE,  # a = false
-                TokenType.NIL,  # a = nil
-            ],
-            TokenType.STRING: [TokenType.SEMICOLON, TokenType.COMMA, TokenType.RPAREN],
-            TokenType.TRUE: [TokenType.SEMICOLON, TokenType.COMMA, TokenType.RPAREN],
-            TokenType.FALSE: [TokenType.SEMICOLON, TokenType.COMMA, TokenType.RPAREN],
-            TokenType.NIL: [TokenType.SEMICOLON, TokenType.COMMA],
-        }
 
-    def _validate_following_token(self):
-        valid_tokens = self.following_tokens[self.current_token.token_type]
-        if self.peek_token.token_type not in valid_tokens:
-            print(f"unexpected {self.peek_token.token_type} token")
-            return False
-        return True
+    def _are_parentheses_balanced(self, s: str) -> bool:
+        stack = []
+        pairs = {")": "(", "}": "{"}
+        for ch in s:
+            if ch in "({":
+                stack.append(ch)
+            elif ch in ")}":
+                if not stack or stack[-1] != pairs[ch]:
+                    return False
+                stack.pop()
+        return not stack
 
-    def _parse_val_statement(self):
+    def _parse_val_statement(self) -> Statement:
         tokens = [self.current_token]
-        while self.peek_token.token_type != TokenType.EOF:
-            print(f"Current token: {self.current_token}")
-            if self._validate_following_token():
+
+        while True:
+            if (
+                self.peek_token.token_type == TokenType.SEMICOLON
+                or self.peek_token.token_type == TokenType.EOF
+            ):
                 tokens.append(self.peek_token)
-                self._next_token()
-            else:
-                print("syntax error in val statement")
-                return
+                break
+            tokens.append(self.peek_token)
+            self._next_token()
+
+        s = " ".join(tok.literal for tok in tokens)
+
+        if not self._are_parentheses_balanced(s):
+            errors.append("Syntax Error: Unbalanced parentheses")
+
+        return Statement(TokenType.VAL, tokens)
 
     def _next_token(self):
         self.current_token = self.peek_token
@@ -58,9 +53,6 @@ class Parser:
         self._next_token()
 
         while self.current_token.token_type != TokenType.EOF:
-            print(f"Current token: {self.current_token}")
-            if self.current_token == TokenType.VAL:
+            if self.current_token.token_type == TokenType.VAL:
                 self._parse_val_statement()
             self._next_token()
-
-        print("Parsing complete.")

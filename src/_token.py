@@ -7,8 +7,8 @@ class TokenType:
     IDENTIFIER = "IDENTIFIER"
 
     # delimiters
-    COMMA = "COMMA"
-    SEMICOLON = "SEMICOLON"
+    COMMA = ","
+    SEMICOLON = ";"
     LPAREN = "("
     RPAREN = ")"
     LBRACE = "{"
