@@ -38,7 +38,7 @@ class Lexer:
             self.read_char()
             if self.ch == '"' or self.ch == "\0":
                 break
-        return self.text[start : self.position]
+        return f'"{self.text[start : self.position]}"'
 
     def lookup_ident(self, ident: str):
         keywords = {
@@ -49,6 +49,7 @@ class Lexer:
             "otherwise": TokenType.OTHERWISE,
             "true": TokenType.TRUE,
             "false": TokenType.FALSE,
+            "nil": TokenType.NIL,
         }
         return keywords.get(ident, TokenType.IDENTIFIER)
 

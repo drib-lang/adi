@@ -1,66 +1,71 @@
 from error import errors
+from mem import stack, Value
 from _token import TokenType, Token
-from mem import stack, Value, ValueType
 from statement import Statement, StatementType
 
 
 class Evaluator:
     def __init__(self, statements: list[Statement]) -> None:
+        self.indentation_level = 0
         self.statements = statements
 
     def _check_for_errors(self):
         if len(errors) > 0:
             print(errors.pop(0))
-            quit()
+        errors.clear()
 
     def _is_identifier_defined(self, identifier):
         levels = len(stack)
         for level in range(levels, 0, -1):
             for i, var in enumerate(stack[level - 1]):
                 if var.name == identifier:
-                    return f"stack[{level-1}][{i}].name"
+                    return f"stack[{level-1}][{i}].value"
         return False
 
-    def _convert_to_python(self, type_: str, tokens: list[Token]) -> str:
-        python = ""
-        for token in tokens:
-            match token.token_type:
-                case TokenType.VAL:
-                    python += ""
-                case TokenType.IDENTIFIER:
-                    if type_ == StatementType.DECLARATION:
-                        ident = self._is_identifier_defined(token.literal)
-                        if ident:
-                            errors.append(
-                                f"syntax error: redeclaration of val '{token.literal}'"
-                            )
-                        else:
-                            stack[-1].append(Value(token.literal, ValueType.NIL, None))
-                            ident = f"stack[{len(stack)-1}][-1].value"
+    def _evaluate_declaration(self, tokens: list[Token]) -> str:
+        python = []
+        tokens.pop(0)  # remove 'val' token
+        name = tokens.pop(0).literal  # get identifier name
+        if self._is_identifier_defined(name):
+            errors.append(f"syntax error: redeclaration of val {name}")
+            return ""
+        else:
+            tokens.pop(0)  # remove '=' token
+            python.append(f'stack[{self.indentation_level}].append(Value("{name}",')
+            for tok in tokens:
+                if tok.token_type in (TokenType.SEMICOLON, TokenType.EOF):
+                    break
+                if tok.token_type in (
+                    TokenType.STRING,
+                    TokenType.LPAREN,
+                    TokenType.RPAREN,
+                    TokenType.LBRACE,
+                    TokenType.RBRACE,
+                    TokenType.COMMA,
+                ):
+                    python.append(f"{tok.literal}")
+                if tok.token_type == TokenType.TRUE:
+                    python.append("True")
+                if tok.token_type == TokenType.FALSE:
+                    python.append("False")
+                if tok.token_type == TokenType.NIL:
+                    python.append("None")
+                if tok.token_type == TokenType.IDENTIFIER:
+                    ident = self._is_identifier_defined(tok.literal)
+                    if ident:
+                        python.append(ident)
                     else:
-                        ident = self._is_identifier_defined(token.literal)
-                        if not ident:
-                            errors.append(
-                                f"reference error: {token.literal} is not defined"
-                            )
-                        else:
-                            python += ident
-                case TokenType.ASSIGN:
-                    python += "="
-                case TokenType.STRING:
-                    python += token.literal
-                case TokenType.LBRACE:
-                    python += "("
-                case TokenType.RBRACE:
-                    python += ")"
-                case TokenType.SEMICOLON:
-                    python += ""
-                case TokenType.COMMA:
-                    python += ","
-        print(python)
-        return python
+                        errors.append(f"reference error: {tok.literal} is not defined")
+                        return ""
+        python.append("))")
+        return "".join(python)
 
     def evaluate(self):
         self._check_for_errors()
         for stmt in self.statements:
-            self._convert_to_python(stmt.type, stmt.tokens)
+            if stmt.type == StatementType.DECLARATION:
+                python = self._evaluate_declaration(stmt.tokens)
+                print(python)
+                exec(python)
+        self._check_for_errors()
+        print(stack)
