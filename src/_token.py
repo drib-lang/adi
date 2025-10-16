@@ -34,5 +34,5 @@ class Token:
     def __repr__(self):
         return f'{{"type": "{self.token_type}", "literal": "{self.literal}"}}'
 
-    def __str__(self):
-        return f'{{"type": "{self.token_type}", "literal": "{self.literal}"}}'
+    def __str__(self) -> str:
+        return self.__repr__()

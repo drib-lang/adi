@@ -1,6 +1,7 @@
 from lexer import Lexer
 from parser import Parser
 from _token import TokenType
+from evaluator import Evaluator
 
 print("⢀⢀⢀⢀⢀⢀⢀⢀ D R I B ⢀⢀⢀⢀⢀⢀⢀⢀")
 print("⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀")
@@ -34,4 +35,7 @@ while True:
             break
 
     parser = Parser(tokens)
-    parser.parse_program()
+    statements = parser.parse_program()
+
+    evaluator = Evaluator(statements)
+    evaluator.evaluate()

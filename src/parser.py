@@ -1,7 +1,7 @@
 from error import errors
 from mem import Value, stack
-from statement import Statement
 from _token import Token, TokenType
+from statement import Statement, StatementType
 
 
 class Parser:
@@ -38,9 +38,9 @@ class Parser:
         s = " ".join(tok.literal for tok in tokens)
 
         if not self._are_parentheses_balanced(s):
-            errors.append("Syntax Error: Unbalanced parentheses")
+            errors.append("syntax error: unbalanced parentheses")
 
-        return Statement(TokenType.VAL, tokens)
+        return Statement(StatementType.DECLARATION, tokens)
 
     def _next_token(self):
         self.current_token = self.peek_token
@@ -48,11 +48,13 @@ class Parser:
             self.tokens.pop(0) if self.tokens else Token(TokenType.EOF, "")
         )
 
-    def parse_program(self):
+    def parse_program(self) -> list[Statement]:
         self._next_token()
         self._next_token()
+        statements = []
 
         while self.current_token.token_type != TokenType.EOF:
             if self.current_token.token_type == TokenType.VAL:
-                self._parse_val_statement()
+                statements.append(self._parse_val_statement())
             self._next_token()
+        return statements

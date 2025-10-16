@@ -1,5 +1,12 @@
 from collections.abc import Callable
-from builtin import println, size
+from builtin import println, size, five
+
+
+class ValueType:
+    STRING = "STRING"
+    FUNCTION = "FUNCTION"
+    BOOLEAN = "BOOLEAN"
+    NIL = "NIL"
 
 
 class Value:
@@ -13,17 +20,16 @@ class Value:
             f'{{"type": "{self.type}", "name": "{self.name}", "value": "{self.value}"}}'
         )
 
-    def __str__(self):
-        return (
-            f'{{"type": "{self.type}", "name": "{self.name}", "value": "{self.value}"}}'
-        )
+    def __str__(self) -> str:
+        return self.__repr__()
 
 
 stack = [
     [
-        Value("PI", "string", "3.141592653589793"),
-        Value("E", "string", "2.718281828459045"),
-        Value("println", "function", println),
-        Value("size", "function", size),
+        Value("PI", ValueType.STRING, "3.141592653589793"),
+        Value("E", ValueType.STRING, "2.718281828459045"),
+        Value("println", ValueType.FUNCTION, println),
+        Value("size", ValueType.FUNCTION, size),
+        Value("five", ValueType.FUNCTION, five),
     ]
 ]

@@ -4,3 +4,7 @@ def println(*args):
 
 def size(obj):
     return len(obj)
+
+
+def five():
+    return "5"
