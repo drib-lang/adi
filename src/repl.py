@@ -18,19 +18,22 @@ print("⢀⢀⢀⢀⢀⢀⢀⢀⢀⡶⡶⢿⡶⢆⡰⡶⢿⡶⡶⢄⢀⢀⢀⢀�
 print("⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀")
 
 while True:
-    scanned = input(">> ")
+    scanned = input(">>> ").strip()
 
     if scanned in ("exit", "quit"):
         print("Exiting...")
         break
 
     lexer = Lexer(scanned)
-    tok = lexer.next_token()
-    tokens = [tok]
+    tokens = []
 
-    while tok.token_type != TokenType.EOF:
+    while True:
         tok = lexer.next_token()
         tokens.append(tok)
+        if tok.token_type == TokenType.EOF:
+            break
 
-    parser = Parser(tokens)
-    parser.parse_program()
+    print("Tokens:", tokens)
+
+    # parser = Parser(tokens)
+    # parser.parse_program()

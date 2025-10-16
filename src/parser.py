@@ -2,39 +2,12 @@ from mem import Value, stack
 from _token import Token, TokenType
 
 
-# class Pythonizer:
-#     @staticmethod
-#     def check_stack(stack, token: Token):
-#         levels = len(stack)
-
-#         for level in range(0, levels):
-#             for val in stack[level]:
-#                 if val.name == token.literal:
-#                     print(val.value)
-#                     return True
-
-#         print(f"{token.literal} is not defined")
-#         return False
-
-#     @staticmethod
-#     def pythonize(tokens: list[Token]) -> list[str]:
-#         python = []
-#         indent_level = 0
-
-#         for token in tokens:
-#             if token.token_type == TokenType.IF:
-#                 python.append("    " * indent_level + f"if {token.literal}:")
-#                 indent_level += 1
-
-#         return python
-
-
 class Parser:
     def __init__(self, tokens: list[Token]) -> None:
         self.tokens = tokens
         self.current_token: Token | None = None
         self.peek_token: Token | None = None
-        self.valid_following_tokens = {
+        self.following_tokens = {
             TokenType.VAL: [TokenType.IDENTIFIER],
             TokenType.IDENTIFIER: [
                 TokenType.ASSIGN,  # a =
@@ -50,23 +23,44 @@ class Parser:
                 TokenType.FALSE,  # a = false
                 TokenType.NIL,  # a = nil
             ],
+            TokenType.STRING: [TokenType.SEMICOLON, TokenType.COMMA, TokenType.RPAREN],
+            TokenType.TRUE: [TokenType.SEMICOLON, TokenType.COMMA, TokenType.RPAREN],
+            TokenType.FALSE: [TokenType.SEMICOLON, TokenType.COMMA, TokenType.RPAREN],
+            TokenType.NIL: [TokenType.SEMICOLON, TokenType.COMMA],
         }
 
-    def parse_program(self):
-        self._next_token()
-        self._next_token()
-
-        while self.current_token.token_type != TokenType.EOF:
-            print(self.current_token)
-            self._next_token()
-
-        print("Parsing complete.")
+    def _validate_following_token(self):
+        valid_tokens = self.following_tokens[self.current_token.token_type]
+        if self.peek_token.token_type not in valid_tokens:
+            print(f"unexpected {self.peek_token.token_type} token")
+            return False
+        return True
 
     def _parse_val_statement(self):
-        pass
+        tokens = [self.current_token]
+        while self.peek_token.token_type != TokenType.EOF:
+            print(f"Current token: {self.current_token}")
+            if self._validate_following_token():
+                tokens.append(self.peek_token)
+                self._next_token()
+            else:
+                print("syntax error in val statement")
+                return
 
     def _next_token(self):
         self.current_token = self.peek_token
         self.peek_token = (
             self.tokens.pop(0) if self.tokens else Token(TokenType.EOF, "")
         )
+
+    def parse_program(self):
+        self._next_token()
+        self._next_token()
+
+        while self.current_token.token_type != TokenType.EOF:
+            print(f"Current token: {self.current_token}")
+            if self.current_token == TokenType.VAL:
+                self._parse_val_statement()
+            self._next_token()
+
+        print("Parsing complete.")

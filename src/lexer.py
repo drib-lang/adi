@@ -35,7 +35,7 @@ class Lexer:
         start = self.position + 1
         while True:
             self.read_char()
-            if self.ch == '"' or self.ch == "":
+            if self.ch == '"' or self.ch == "\0":
                 break
         return self.text[start : self.position]
 

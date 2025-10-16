@@ -1,4 +1,5 @@
 from collections.abc import Callable
+from builtin import println, size
 
 
 class Value:
@@ -22,5 +23,7 @@ stack = [
     [
         Value("PI", "string", "3.141592653589793"),
         Value("E", "string", "2.718281828459045"),
+        Value("println", "function", println),
+        Value("size", "function", size),
     ]
 ]

@@ -1,0 +1,6 @@
+fun my_add(x, y) {
+    return add(x, y);
+}
+
+val s = my_add("55", "20");
+println(s); // "75"
