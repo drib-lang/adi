@@ -20,6 +20,5 @@ stack = [
         Value("E", "2.718281828459045"),
         Value("println", println),
         Value("size", size),
-        Value("five", five),
     ]
 ]
