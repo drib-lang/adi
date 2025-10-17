@@ -1,8 +1,6 @@
-<center>
-
-![Drib Logo](/docs/drib-readme.png)
-
-</center>
+<p align="center">
+    <img width="100" height="100" src="/docs/drib-readme.png">
+</p>
 
 <h1 align="center">A Drib Interpreter</h1>
 
