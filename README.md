@@ -1,5 +1,10 @@
-# adi
+<center>
 
-adi is a Drib interpreter.
+![Drib Logo](/docs/drib-readme.png)
 
-## Built-in functions
+</center>
+
+<h1 align="center">A Drib Interpreter</h1>
+
+Drib is an esoteric programming in which pretty much every value is a string, there are a few exceptions, like booleans (to perform logic operations).
+
