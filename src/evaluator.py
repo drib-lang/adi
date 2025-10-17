@@ -39,8 +39,8 @@ class Evaluator:
                     TokenType.STRING,
                     TokenType.LPAREN,
                     TokenType.RPAREN,
-                    TokenType.LBRACE,
-                    TokenType.RBRACE,
+                    TokenType.LBRACE,  # TODO: remove from here
+                    TokenType.RBRACE,  # TODO: remove from here
                     TokenType.COMMA,
                 ):
                     python.append(f"{tok.literal}")
@@ -60,6 +60,9 @@ class Evaluator:
         python.append("))")
         return "".join(python)
 
+    def _evaluate_expression(self, tokens: list[Token]) -> str:
+        pass
+
     def evaluate(self):
         self._check_for_errors()
         for stmt in self.statements:
@@ -67,5 +70,7 @@ class Evaluator:
                 python = self._evaluate_declaration(stmt.tokens)
                 print(python)
                 exec(python)
+            if stmt.type == StatementType.EXPRESSION:
+                pass
         self._check_for_errors()
         print(stack)

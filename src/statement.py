@@ -15,3 +15,11 @@ class Statement:
 
 class StatementType:
     DECLARATION = "DECLARATION"
+    EXPRESSION = "EXPRESSION"
+    BLOCK = "BLOCK"
+    IF = "IF"
+    LOOP = "LOOP"
+    FUNCTION = "FUNCTION"
+    RETURN = "RETURN"
+    BREAK = "BREAK"
+    CONTINUE = "CONTINUE"

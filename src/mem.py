@@ -1,5 +1,5 @@
 from collections.abc import Callable
-from builtin import println, size, add
+from builtin import println, size, add, sub, mul, div, mod, pow
 
 
 class Value:
@@ -21,5 +21,10 @@ stack = [
         Value("println", println),
         Value("size", size),
         Value("add", add),
+        Value("sub", sub),
+        Value("mul", mul),
+        Value("div", div),
+        Value("mod", mod),
+        Value("pow", pow),
     ]
 ]
