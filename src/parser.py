@@ -22,7 +22,7 @@ class Parser:
                 stack.pop()
         return not stack
 
-    def _parse_val_statement(self) -> Statement:
+    def _parse_declaration_statement(self) -> Statement:
         tokens = [self.current_token]
 
         while True:
@@ -42,6 +42,26 @@ class Parser:
 
         return Statement(StatementType.DECLARATION, tokens)
 
+    def _parse_when_statement(self) -> Statement:
+        tokens = [self.current_token]
+        while True:
+            s = "".join(tok.literal for tok in tokens)
+            if (
+                self.current_token.token_type == TokenType.RPAREN
+                and self._are_parentheses_balanced(s)
+            ):
+                tokens.append(self.peek_token)
+                break
+            tokens.append(self.peek_token)
+            self._next_token()
+
+        s = "".join(tok.literal for tok in tokens)
+
+        if not self._are_parentheses_balanced(s):
+            errors.append("syntax error: unbalanced parentheses")
+
+        return Statement(StatementType.WHEN, tokens)
+
     def _next_token(self):
         self.current_token = self.peek_token
         self.peek_token = (
@@ -55,6 +75,8 @@ class Parser:
 
         while self.current_token.token_type != TokenType.EOF:
             if self.current_token.token_type == TokenType.VAL:
-                statements.append(self._parse_val_statement())
+                statements.append(self._parse_declaration_statement())
+            elif self.current_token.token_type == TokenType.WHEN:
+                statements.append(self._parse_when_statement())
             self._next_token()
         return statements

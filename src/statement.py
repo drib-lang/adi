@@ -17,7 +17,7 @@ class StatementType:
     DECLARATION = "DECLARATION"
     EXPRESSION = "EXPRESSION"
     BLOCK = "BLOCK"
-    IF = "IF"
+    WHEN = "WHEN"
     LOOP = "LOOP"
     FUNCTION = "FUNCTION"
     RETURN = "RETURN"
