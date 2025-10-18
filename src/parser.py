@@ -50,7 +50,6 @@ class Parser:
                 self.current_token.token_type == TokenType.RPAREN
                 and self._are_parentheses_balanced(s)
             ):
-                tokens.append(self.peek_token)
                 break
             tokens.append(self.peek_token)
             self._next_token()

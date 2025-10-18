@@ -6,7 +6,7 @@ from statement import Statement, StatementType
 
 class Evaluator:
     def __init__(self, statements: list[Statement]) -> None:
-        self.indentation_level = 0
+        self.block_level = 0
         self.statements = statements
 
     def _check_for_errors(self):
@@ -31,7 +31,7 @@ class Evaluator:
             return ""
         else:
             tokens.pop(0)  # remove '=' token
-            python.append(f'stack[{self.indentation_level}].append(Value("{name}",')
+            python.append(f'stack[{self.block_level}].append(Value("{name}",')
             for tok in tokens:
                 if tok.token_type in (TokenType.SEMICOLON, TokenType.EOF):
                     break
@@ -60,6 +60,36 @@ class Evaluator:
         python.append("))")
         return "".join(python)
 
+    def _evaluate_when(self, tokens: list[Token]) -> str:
+        python = []
+        tokens.pop(0)  # remove 'when' token
+
+        for tok in tokens:
+            if tok.token_type == TokenType.EOF:
+                break
+            if tok.token_type in (
+                TokenType.STRING,
+                TokenType.LPAREN,
+                TokenType.RPAREN,
+                TokenType.COMMA,
+            ):
+                python.append(f"{tok.literal}")
+            if tok.token_type == TokenType.TRUE:
+                python.append("True")
+            if tok.token_type == TokenType.FALSE:
+                python.append("False")
+            if tok.token_type == TokenType.NIL:
+                python.append("None")
+            if tok.token_type == TokenType.IDENTIFIER:
+                ident = self._is_identifier_defined(tok.literal)
+                if ident:
+                    python.append(ident)
+                else:
+                    errors.append(f"reference error: {tok.literal} is not defined")
+                    return ""
+
+        print("".join(python))
+
     def _evaluate_expression(self, tokens: list[Token]) -> str:
         pass
 
@@ -70,6 +100,10 @@ class Evaluator:
                 python = self._evaluate_declaration(stmt.tokens)
                 print(python)
                 exec(python)
+            if stmt.type == StatementType.WHEN:
+                python = self._evaluate_when(stmt.tokens)
+                print(python)
+                # exec(python)
             if stmt.type == StatementType.EXPRESSION:
                 pass
         self._check_for_errors()
