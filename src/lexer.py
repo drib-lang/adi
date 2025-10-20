@@ -86,3 +86,12 @@ class Lexer:
                     errors.append(f"Illegal character: {self.ch}")
         self.read_char()
         return tok
+
+    def tokenize(self):
+        tokens = []
+        while True:
+            tok = self.next_token()
+            tokens.append(tok)
+            if tok.token_type == TokenType.EOF:
+                break
+        return tokens
