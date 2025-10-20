@@ -1,6 +1,6 @@
 from error import errors
-from _token import Token
-from _token import TokenType
+from token_ import Token
+from token_ import TokenType
 
 
 class Lexer:

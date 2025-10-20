@@ -1,7 +1,5 @@
 from lexer import Lexer
-from parser import Parser
-from _token import TokenType
-from evaluator import Evaluator
+from token_ import TokenType
 
 print("⢀⢀⢀⢀⢀⢀⢀⢀ D R I B ⢀⢀⢀⢀⢀⢀⢀⢀")
 print("⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀")
@@ -33,9 +31,3 @@ while True:
         tokens.append(tok)
         if tok.token_type == TokenType.EOF:
             break
-
-    parser = Parser(tokens)
-    statements = parser.parse_program()
-
-    evaluator = Evaluator(statements)
-    evaluator.evaluate()

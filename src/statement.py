@@ -1,4 +1,4 @@
-from _token import Token
+from token_ import Token
 
 
 class Statement:
