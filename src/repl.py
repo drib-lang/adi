@@ -68,8 +68,4 @@ env = {
 }
 
 if __name__ == "__main__":
-    print("println in env?", "println" in env)
-    print("a in env?", "a" in env)
-    print("type of println:", type(env.get("println")))
-
     run_repl(Lexer, Parser, env)

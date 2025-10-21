@@ -37,6 +37,7 @@ class Parser:
             tok = self.current_token()
 
             if tok.token_type == TokenType.VAL:
+                self.next_token()
                 lines.append(self.parse_val_statement())
             elif tok.token_type == TokenType.FUNCTION:
                 lines.append(self.parse_function())
@@ -154,8 +155,10 @@ class Parser:
                 else:
                     indent_inner = "    " * self.indent_level
                     else_lines.append(f"{indent_inner}{tok.literal}")
-                    self.next_token()
-            self.indent_level -= 1
+                indent_inner = "    " * self.indent_level
+                body_lines.append(f"{indent_inner}{tok.literal}")
+                self.next_token()
+                self.indent_level -= 1
             self.next_token()
 
         return "\n".join([header] + body_lines + else_lines)
