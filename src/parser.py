@@ -63,7 +63,16 @@ class Parser:
         if self.current_token().token_type == TokenType.SEMICOLON:
             self.next_token()
 
-        rhs = "".join(value_tokens)
+        def map_literal(tok):
+            if tok == "nil":
+                return "None"
+            if tok == "true":
+                return "True"
+            if tok == "false":
+                return "False"
+            return tok
+
+        rhs = "".join([map_literal(tok) for tok in value_tokens])
         return f"{name} = {rhs}"
 
     def parse_function(self):
@@ -113,7 +122,17 @@ class Parser:
         if self.current_token().token_type == TokenType.SEMICOLON:
             self.next_token()
         indent = "    " * self.indent_level
-        return f"{indent}return {''.join(tokens)}"
+
+        def map_literal(tok):
+            if tok == "nil":
+                return "None"
+            if tok == "true":
+                return "True"
+            if tok == "false":
+                return "False"
+            return tok
+
+        return f"{indent}return {''.join([map_literal(tok) for tok in tokens])}"
 
     def parse_expression_statement(self):
         tokens = []
@@ -126,7 +145,17 @@ class Parser:
         if self.current_token().token_type == TokenType.SEMICOLON:
             self.next_token()
         indent = "    " * self.indent_level
-        return f"{indent}{''.join(tokens)}"
+
+        def map_literal(tok):
+            if tok == "nil":
+                return "None"
+            if tok == "true":
+                return "True"
+            if tok == "false":
+                return "False"
+            return tok
+
+        return f"{indent}{''.join([map_literal(tok) for tok in tokens])}"
 
     def parse_when_statement(self):
         self.next_token()  # skip 'when'
