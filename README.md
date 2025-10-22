@@ -9,5 +9,8 @@
     <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
 </p>
 
-Drib is an esoteric programming in which pretty much every value is a string, there are a few exceptions, like booleans (to perform logic operations).
+---
 
+Drib is an esoteric programming language where nearly every value is a string, with a few exceptions (like booleans for logic operations).
+
+This repository contains a Python interpreter for Drib, including a REPL and example programs.
