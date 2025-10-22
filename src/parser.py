@@ -41,10 +41,10 @@ class Parser:
                 lines.append(self.parse_val_statement())
             elif tok.token_type == TokenType.FUNCTION:
                 lines.append(self.parse_function())
-            elif tok.literal == "if":
-                lines.append(self.parse_if_statement())
+            elif tok.token_type == TokenType.WHEN:
+                lines.append(self.parse_when_statement())
             else:
-                self.next_token()
+                lines.append(self.parse_expression_statement())
         return "\n".join(lines)
 
     def parse_val_statement(self):
@@ -89,12 +89,12 @@ class Parser:
             tok = self.current_token()
             if tok.token_type == TokenType.RETURN:
                 body_lines.append(self.parse_return_statement())
-            elif tok.literal == "if":
-                body_lines.append(self.parse_if_statement())
+            elif tok.token_type == TokenType.WHEN:
+                body_lines.append(self.parse_when_statement())
             elif tok.token_type == TokenType.VAL:
                 body_lines.append(self.parse_val_statement())
             else:
-                self.next_token()
+                body_lines.append(self.parse_expression_statement())
 
         self.indent_level -= 1
         self.next_token()
@@ -102,24 +102,55 @@ class Parser:
         return "\n".join([header] + body_lines)
 
     def parse_return_statement(self):
-        self.next_token()
-        expr = self.current_token().literal
-        self.next_token()
+        self.next_token()  # skip 'return'
+        tokens = []
+        while self.current_token().token_type not in (
+            TokenType.SEMICOLON,
+            TokenType.EOF,
+        ):
+            tokens.append(self.current_token().literal)
+            self.next_token()
         if self.current_token().token_type == TokenType.SEMICOLON:
             self.next_token()
         indent = "    " * self.indent_level
-        return f"{indent}return {expr}"
+        return f"{indent}return {''.join(tokens)}"
 
-    def parse_if_statement(self):
-        self.next_token()
-        self.next_token()
+    def parse_expression_statement(self):
+        tokens = []
+        while self.current_token().token_type not in (
+            TokenType.SEMICOLON,
+            TokenType.EOF,
+        ):
+            tokens.append(self.current_token().literal)
+            self.next_token()
+        if self.current_token().token_type == TokenType.SEMICOLON:
+            self.next_token()
+        indent = "    " * self.indent_level
+        return f"{indent}{''.join(tokens)}"
+
+    def parse_when_statement(self):
+        self.next_token()  # skip 'when'
+        if self.current_token().token_type != TokenType.LPAREN:
+            raise Exception("Syntax error: expected '(' after 'when'")
+        self.next_token()  # skip '('
         condition_tokens = []
-        while self.current_token().token_type != TokenType.RPAREN:
+        paren_count = 1
+        while paren_count > 0 and self.current_token().token_type != TokenType.EOF:
+            if self.current_token().token_type == TokenType.LPAREN:
+                paren_count += 1
+            elif self.current_token().token_type == TokenType.RPAREN:
+                paren_count -= 1
+                if paren_count == 0:
+                    break
             condition_tokens.append(self.current_token().literal)
             self.next_token()
+        if paren_count != 0:
+            raise Exception("Syntax error: missing ')' in when condition")
         condition = "".join(condition_tokens)
-        self.next_token()
-        self.next_token()
+        self.next_token()  # skip ')'
+        if self.current_token().token_type != TokenType.LBRACE:
+            raise Exception("Syntax error: expected '{' after when condition")
+        self.next_token()  # skip '{'
 
         indent = "    " * self.indent_level
         header = f"{indent}if {condition}:"
@@ -128,37 +159,33 @@ class Parser:
         body_lines = []
         while self.current_token().token_type != TokenType.RBRACE:
             tok = self.current_token()
-            if tok.literal == "if":
-                body_lines.append(self.parse_if_statement())
+            if tok.token_type == TokenType.WHEN:
+                body_lines.append(self.parse_when_statement())
             elif tok.token_type == TokenType.VAL:
                 body_lines.append(self.parse_val_statement())
             elif tok.token_type == TokenType.RETURN:
                 body_lines.append(self.parse_return_statement())
             else:
-                indent_inner = "    " * self.indent_level
-                body_lines.append(f"{indent_inner}{tok.literal}")
-                self.next_token()
+                expr = self.parse_expression_statement()
+                body_lines.append(expr)
 
         self.indent_level -= 1
         self.next_token()
 
         else_lines = []
-        if self.current_token().literal == "otherwise":
+        if self.current_token().token_type == TokenType.OTHERWISE:
             self.next_token()
             self.next_token()
             self.indent_level += 1
             else_lines.append("    " * (self.indent_level - 1) + "else:")
             while self.current_token().token_type != TokenType.RBRACE:
                 tok = self.current_token()
-                if tok.literal == "if":
-                    else_lines.append(self.parse_if_statement())
+                if tok.token_type == TokenType.WHEN:
+                    else_lines.append(self.parse_when_statement())
                 else:
-                    indent_inner = "    " * self.indent_level
-                    else_lines.append(f"{indent_inner}{tok.literal}")
-                indent_inner = "    " * self.indent_level
-                body_lines.append(f"{indent_inner}{tok.literal}")
-                self.next_token()
-                self.indent_level -= 1
+                    expr = self.parse_expression_statement()
+                    else_lines.append(expr)
+            self.indent_level -= 1
             self.next_token()
 
         return "\n".join([header] + body_lines + else_lines)
