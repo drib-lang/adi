@@ -18,7 +18,7 @@ print("⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀�
 
 
 def run_repl(lexer_cls, parser_cls, env):
-    print("Welcome to Drib! Type 'exit' to quit.")
+    print("Welcome to Drib! Type 'exit' or 'quit' to quit.")
 
     buffer = ""
     open_braces = 0
@@ -27,7 +27,7 @@ def run_repl(lexer_cls, parser_cls, env):
         prompt = ">>> " if open_braces == 0 else "... "
         line = input(prompt)
 
-        if line.strip() == "exit":
+        if line.strip() == "exit" or line.strip() == "quit":
             break
 
         open_braces += line.count("{")
@@ -41,8 +41,6 @@ def run_repl(lexer_cls, parser_cls, env):
                 tokens = lexer.tokenize()
                 parser = parser_cls(tokens)
                 python_code = parser.parse_program()
-
-                print(python_code)
                 exec(python_code, env, env)
 
             except Exception as e:

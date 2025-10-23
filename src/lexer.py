@@ -90,6 +90,10 @@ class Lexer:
         while True:
             tok = self.next_token()
             tokens.append(tok)
+
+            if tok.token_type == TokenType.ILLEGAL:
+                raise Exception(f"Illegal character: {tok.literal}")
+
             if tok.token_type == TokenType.EOF:
                 break
         return tokens
