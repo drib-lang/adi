@@ -1,0 +1,7 @@
+fun fibonacci(n) {
+    when(lt(n, "2")) {
+        return n;
+    }
+
+    return add(fibonacci(sub(n, "1")), fibonacci(sub(n, "2")));
+}
