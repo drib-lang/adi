@@ -9,7 +9,7 @@
     <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
 </p>
 
-Drib is an esoteric programming language where nearly every value is a string, with a few exceptions (such as booleans for logic operations).
+While Drib may look like a normal programming language, it does not support numbers in the traditional sense. All numbers must be stored as strings, and arithmetic operations are performed using built-in functions that operate on these string representations. That is what makes Drib special; that is what makes Drib *esoteric*.
 
 ## Prerequisites
 
@@ -21,7 +21,7 @@ Drib is an esoteric programming language where nearly every value is a string, w
 1. Clone the repository to your local machine:
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/drib-lang/adi.git
    ```
 2. Navigate to the project directory:
 
