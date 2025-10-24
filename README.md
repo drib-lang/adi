@@ -37,3 +37,13 @@ To start the Drib REPL, run:
 ```bash
 python3 src/repl.py
 ```
+
+## Planned Features
+
+The following features are planned for future releases, but are not yet implemented:
+
+- **Lists**: Support for list data structures and related operations.
+- **Dictionaries**: Support for dictionary (key-value) data structures and related operations.
+- **Image Processing**: Capabilities for handling and processing images within Drib programs.
+
+If you have suggestions for additional features, feel free to open an issue or contribute!
