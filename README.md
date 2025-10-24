@@ -42,6 +42,8 @@ python3 src/repl.py
 
 The following features are planned for future releases, but are not yet implemented:
 
+- **CLI support**: Ability to run Drib programs from the command line (outside the REPL).
+- **Compilation to Python**: Compile Drib code to Python source code.
 - **Lists**: Support for list data structures and related operations.
 - **Dictionaries**: Support for dictionary (key-value) data structures and related operations.
 - **Image Processing**: Capabilities for handling and processing images within Drib programs.
