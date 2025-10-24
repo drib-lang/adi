@@ -5,6 +5,7 @@
 <h1 align="center">A Drib Interpreter</h1>
 
 <p align="center">
+    <!-- <img alt="Drib: 0.1.0" src="https://img.shields.io/badge/drib-0.1.0-5594EC.svg"> -->
     <img alt="Python: 3.11" src="https://img.shields.io/badge/python-3.11-3572A5.svg">
     <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
 </p>

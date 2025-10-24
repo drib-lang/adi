@@ -10,6 +10,18 @@ class Lexer:
         self.ch = ""  # current char under examination
         self.read_char()
 
+    def peek_char(self):
+        if self.read_position >= len(self.text):
+            return "\0"
+        else:
+            return self.text[self.read_position]
+
+    def skip_comment(self):
+        while self.ch != "\n" and self.ch != "\0":
+            self.read_char()
+        if self.ch == "\n":
+            self.read_char()
+
     def read_char(self):
         if self.read_position >= len(self.text):
             self.ch = "\0"
@@ -54,6 +66,11 @@ class Lexer:
 
     def next_token(self):
         self.skip_whitespace()
+        while self.ch == "/" and self.peek_char() == "/":
+            self.read_char()
+            self.read_char()
+            self.skip_comment()
+            self.skip_whitespace()
         tok = None
 
         match self.ch:
@@ -79,6 +96,9 @@ class Lexer:
                 if self.is_letter(self.ch):
                     literal = self.read_identifier()
                     tok = Token(self.lookup_ident(literal), literal)
+                    return tok
+                elif self.ch.isdigit():
+                    tok = Token(TokenType.ILLEGAL, self.ch)
                     return tok
                 else:
                     tok = Token(TokenType.ILLEGAL, self.ch)
