@@ -32,7 +32,7 @@ class Token:
         self.literal = literal
 
     def __repr__(self):
-        return f'{{"type": "{self.token_type}", "literal": "{self.literal}"}}'
+        return f'{{"token_type": "{self.token_type}", "literal": "{self.literal}"}}'
 
     def __str__(self) -> str:
         return self.__repr__()

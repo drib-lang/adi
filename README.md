@@ -5,9 +5,10 @@
 <h1 align="center">A Drib Interpreter</h1>
 
 <p align="center">
-    <!-- <img alt="Drib: 0.1.0" src="https://img.shields.io/badge/drib-0.1.0-5594EC.svg"> -->
-    <img alt="Python: 3.11" src="https://img.shields.io/badge/python-3.11-3572A5.svg">
+    <a href="https://github.com/drib-lang/adi/actions/workflows/ci.yml"><img alt="Code style: black" src="https://github.com/drib-lang/adi/actions/workflows/ci.yml/badge.svg"></a>
     <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+    <img alt="Drib: 0.1.0" src="https://img.shields.io/badge/drib-0.1.0-5594EC.svg">
+    <img alt="Python: 3.11" src="https://img.shields.io/badge/python-3.11-3572A5.svg">
 </p>
 
 While Drib may look like a normal programming language, it does not support numbers in the traditional sense. All numbers must be stored as strings, and arithmetic operations are performed using built-in functions that operate on these string representations. That is what makes Drib special; that is what makes Drib *esoteric*.
