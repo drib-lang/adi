@@ -1,19 +1,10 @@
-"""
-Drib CLI
-
-Minimal command-line interface to:
-- run a .drib file
-- emit translated Python
-- start the interactive REPL when no input is given
-"""
-
 import sys
 import argparse
-from pathlib import Path
 
-from builtins_ import env
 from lexer import Lexer
+from pathlib import Path
 from parser import Parser
+from builtins_ import env
 
 
 def compile_to_python(source: str) -> str:
