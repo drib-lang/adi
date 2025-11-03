@@ -9,6 +9,3 @@ println(c); // "10"
 
 val d = div("4.0", "16");
 println(d); // "0.25"
-
-val e = div("4", E);
-println(e); // "1.2732395447351628"
