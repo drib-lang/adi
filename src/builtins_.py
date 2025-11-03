@@ -165,6 +165,4 @@ env = {
     "not": not_,
     "print": print_,
     "println": println,
-    "E": "3.141592653589793",
-    "PI": "2.718281828459045",
 }
