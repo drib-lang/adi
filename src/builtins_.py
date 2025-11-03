@@ -1,8 +1,3 @@
-"""
-Environment functions for the Drib REPL.
-"""
-
-
 def parse_number(s):
     """Parse a string as int or float. Raises ValueError if not a number."""
     try:
@@ -155,7 +150,6 @@ def print_(*args):
     print(*args, end="")
 
 
-# Environment dictionary
 env = {
     "add": add,
     "sub": sub,

@@ -5,6 +5,7 @@ from lexer import Lexer
 from pathlib import Path
 from parser import Parser
 from builtins_ import env
+from version import VERSION
 
 
 def compile_to_python(source: str) -> str:
@@ -42,6 +43,17 @@ def write_text(path: Path, content: str) -> None:
         sys.exit(2)
 
 
+def embed_builtins(python_code: str) -> str:
+    """Prepend the contents of builtins_.py so the output is self-contained."""
+    try:
+        builtins_path = Path(__file__).with_name("builtins_.py")
+        builtins_src = builtins_path.read_text(encoding="utf-8")
+        return f"{builtins_src.rstrip()}\n\n# --- Drib Program ---\n{python_code}"
+    except OSError as e:
+        print(f"Could not read builtins to embed: {e}", file=sys.stderr)
+        return python_code
+
+
 def build_argparser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
         prog="drib",
@@ -54,12 +66,6 @@ def build_argparser() -> argparse.ArgumentParser:
         help="Path to a .drib source file. If omitted, starts the REPL.",
     )
     p.add_argument(
-        "-p",
-        "--python",
-        action="store_true",
-        help="Print translated Python to stdout and exit.",
-    )
-    p.add_argument(
         "-o",
         "--out",
         type=Path,
@@ -69,7 +75,7 @@ def build_argparser() -> argparse.ArgumentParser:
         "-v",
         "--version",
         action="version",
-        version="drib 0.2.0",
+        version=f"drib {VERSION}",
     )
     return p
 
@@ -77,7 +83,7 @@ def build_argparser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> int:
     args = build_argparser().parse_args(argv)
 
-    if not args.file and not args.eval:
+    if not args.file:
         from repl import run_repl
 
         run_repl(Lexer, Parser, env)
@@ -93,11 +99,8 @@ def main(argv: list[str] | None = None) -> int:
                 file=sys.stderr,
             )
             return 2
-        write_text(args.out, python_code)
-        return 0
-
-    if args.python:
-        print(python_code)
+        output_with_builtins = embed_builtins(python_code)
+        write_text(args.out, output_with_builtins)
         return 0
 
     return run_code(python_code)
