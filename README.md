@@ -7,7 +7,7 @@
 <p align="center">
     <a href="https://github.com/drib-lang/adi/actions/workflows/ci.yml"><img alt="Code style: black" src="https://github.com/drib-lang/adi/actions/workflows/ci.yml/badge.svg"></a>
     <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
-    <img alt="Drib: 0.1.0" src="https://img.shields.io/badge/drib-0.1.0-5594EC.svg">
+    <img alt="Drib: 0.2.0" src="https://img.shields.io/badge/drib-0.2.0-5594EC.svg">
     <img alt="Python: 3.11" src="https://img.shields.io/badge/python-3.11-3572A5.svg">
 </p>
 
@@ -37,15 +37,32 @@ While Drib may look like a normal programming language, it does not support numb
 To start the Drib REPL, run:
 
 ```bash
-python3 src/repl.py
+python3 src/drib.py
 ```
+
+## Execute a Drib (.drib extension) file
+
+To execute a Drib file, run:
+
+```bash
+python3 src/drib.py examples/fibonacci.drib
+```
+
+## Generate a Python file
+
+To generate a Python file, run:
+
+```bash
+python3 src/drib.py examples/fibonacci.drib -o fibonacci.py
+```
+
+_This will not execute the code._
 
 ## Planned Features
 
 The following features are planned for future releases, but are not yet implemented:
 
-- **CLI support**: Ability to run Drib programs from the command line (outside the REPL).
-- **Compilation to Python**: Compile Drib code to Python source code.
+- **Loops**: Support for loops.
 - **Lists**: Support for list data structures and related operations.
 - **Dictionaries**: Support for dictionary (key-value) data structures and related operations.
 - **Image Processing**: Capabilities for handling and processing images within Drib programs.

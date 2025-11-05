@@ -7,5 +7,5 @@ println(b); // "-2"
 val c = mul("2", "5");
 println(c); // "10"
 
-val d = div("4", "16");
+val d = div("4.0", "16");
 println(d); // "0.25"
