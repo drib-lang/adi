@@ -140,7 +140,12 @@ def not_(x):
     return not x
 
 
-def echo(*args):
+def print_(*args):
+    """Print args* to the console."""
+    print(*args, end="")
+
+
+def println(*args):
     """Print args* to the console."""
     print(*args)
 
@@ -158,5 +163,6 @@ env = {
     "leq": leq,
     "eqs": eqs,
     "not": not_,
-    "echo": echo,
+    "print": print_,
+    "println": println,
 }

@@ -5,3 +5,5 @@ fun fibonacci(n) {
 
     return add(fibonacci(sub(n, "1")), fibonacci(sub(n, "2")));
 }
+
+println(fibonacci("25"));

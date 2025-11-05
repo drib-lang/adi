@@ -37,13 +37,32 @@ While Drib may look like a normal programming language, it does not support numb
 To start the Drib REPL, run:
 
 ```bash
-python3 src/repl.py
+python3 src/drib.py
 ```
+
+## Execute a Drib (.drib extension) file
+
+To execute a Drib file, run:
+
+```bash
+python3 src/drib.py examples/fibonacci.drib
+```
+
+## Generate a Python file
+
+To generate a Python file, run:
+
+```bash
+python3 src/drib.py examples/fibonacci.drib -o fibonacci.py
+```
+
+_This will not execute the code._
 
 ## Planned Features
 
 The following features are planned for future releases, but are not yet implemented:
 
+- **Loops**: Support for loops.
 - **Lists**: Support for list data structures and related operations.
 - **Dictionaries**: Support for dictionary (key-value) data structures and related operations.
 - **Image Processing**: Capabilities for handling and processing images within Drib programs.
