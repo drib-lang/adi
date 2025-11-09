@@ -70,3 +70,31 @@ def test_function_declaration():
 
         assert token_type == e["token_type"]
         assert token_literal == e["literal"]
+
+
+def test_loop_next_out_tokens():
+    c = """
+    loop {
+        next;
+        out;
+    }
+    """
+    l = Lexer(c)
+    toks = l.tokenize()
+    expected = [
+        {"token_type": "LOOP", "literal": "loop"},
+        {"token_type": "{", "literal": "{"},
+        {"token_type": "NEXT", "literal": "next"},
+        {"token_type": ";", "literal": ";"},
+        {"token_type": "OUT", "literal": "out"},
+        {"token_type": ";", "literal": ";"},
+        {"token_type": "}", "literal": "}"},
+        {"token_type": "EOF", "literal": ""},
+    ]
+
+    for i, e in enumerate(expected):
+        token_type = toks[i].token_type
+        token_literal = toks[i].literal
+
+        assert token_type == e["token_type"]
+        assert token_literal == e["literal"]

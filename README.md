@@ -7,7 +7,7 @@
 <p align="center">
     <a href="https://github.com/drib-lang/adi/actions/workflows/ci.yml"><img alt="Code style: black" src="https://github.com/drib-lang/adi/actions/workflows/ci.yml/badge.svg"></a>
     <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
-    <img alt="Drib: 0.2.0" src="https://img.shields.io/badge/drib-0.2.0-5594EC.svg">
+    <img alt="Drib: 0.3.0" src="https://img.shields.io/badge/drib-0.3.0-5594EC.svg">
     <img alt="Python: 3.11" src="https://img.shields.io/badge/python-3.11-3572A5.svg">
 </p>
 
@@ -62,7 +62,6 @@ _This will not execute the code._
 
 The following features are planned for future releases, but are not yet implemented:
 
-- **Loops**: Support for loops.
 - **Lists**: Support for list data structures and related operations.
 - **Dictionaries**: Support for dictionary (key-value) data structures and related operations.
 - **Image Processing**: Capabilities for handling and processing images within Drib programs.

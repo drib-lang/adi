@@ -47,3 +47,21 @@ def test_function_declaration():
     py_code = p.parse_program()
     expected = "def my_function(a, b):\n" + "    return add(a,b)"
     assert py_code == expected
+
+
+def test_loop_with_next_and_out():
+    # loop { next; out; }
+    tokens = [
+        Token(TokenType.LOOP, "loop"),
+        Token(TokenType.LBRACE, "{"),
+        Token(TokenType.NEXT, "next"),
+        Token(TokenType.SEMICOLON, ";"),
+        Token(TokenType.OUT, "out"),
+        Token(TokenType.SEMICOLON, ";"),
+        Token(TokenType.RBRACE, "}"),
+        Token(TokenType.EOF, ""),
+    ]
+    p = Parser(tokens)
+    py_code = p.parse_program()
+    expected = "while True:\n" + "    continue\n" + "    break"
+    assert py_code == expected
