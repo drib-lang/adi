@@ -25,6 +25,11 @@ class TokenType:
     STRING = "STRING"
     NIL = "NIL"
 
+    # loop-related
+    LOOP = "LOOP"
+    NEXT = "NEXT"
+    OUT = "OUT"
+
 
 class Token:
     def __init__(self, token_type: str, literal: str):
@@ -32,7 +37,7 @@ class Token:
         self.literal = literal
 
     def __repr__(self):
-        return f'{{"token_type": "{self.token_type}", "literal": "{self.literal}"}}'
+        return f'{"token_type": "{self.token_type}", "literal": "{self.literal}"}'
 
     def __str__(self) -> str:
         return self.__repr__()

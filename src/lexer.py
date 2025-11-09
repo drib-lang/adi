@@ -61,6 +61,9 @@ class Lexer:
             "true": TokenType.TRUE,
             "false": TokenType.FALSE,
             "nil": TokenType.NIL,
+            "loop": TokenType.LOOP,
+            "next": TokenType.NEXT,
+            "out": TokenType.OUT,
         }
         return keywords.get(ident, TokenType.IDENTIFIER)
 
