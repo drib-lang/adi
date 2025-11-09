@@ -43,6 +43,12 @@ class Parser:
                 lines.append(self.parse_function())
             elif tok.token_type == TokenType.WHEN:
                 lines.append(self.parse_when_statement())
+            elif tok.token_type == TokenType.LOOP:
+                lines.append(self.parse_loop_statement())
+            elif tok.token_type == TokenType.NEXT:
+                lines.append(self.parse_next_statement())
+            elif tok.token_type == TokenType.OUT:
+                lines.append(self.parse_out_statement())
             else:
                 lines.append(self.parse_expression_statement())
         return "\n".join(lines)
@@ -102,6 +108,12 @@ class Parser:
                 body_lines.append(self.parse_when_statement())
             elif tok.token_type == TokenType.VAL:
                 body_lines.append(self.parse_val_statement())
+            elif tok.token_type == TokenType.LOOP:
+                body_lines.append(self.parse_loop_statement())
+            elif tok.token_type == TokenType.NEXT:
+                body_lines.append(self.parse_next_statement())
+            elif tok.token_type == TokenType.OUT:
+                body_lines.append(self.parse_out_statement())
             else:
                 body_lines.append(self.parse_expression_statement())
 
@@ -194,6 +206,12 @@ class Parser:
                 body_lines.append(self.parse_val_statement())
             elif tok.token_type == TokenType.RETURN:
                 body_lines.append(self.parse_return_statement())
+            elif tok.token_type == TokenType.LOOP:
+                body_lines.append(self.parse_loop_statement())
+            elif tok.token_type == TokenType.NEXT:
+                body_lines.append(self.parse_next_statement())
+            elif tok.token_type == TokenType.OUT:
+                body_lines.append(self.parse_out_statement())
             else:
                 expr = self.parse_expression_statement()
                 body_lines.append(expr)
@@ -203,18 +221,80 @@ class Parser:
 
         else_lines = []
         if self.current_token().token_type == TokenType.OTHERWISE:
-            self.next_token()
-            self.next_token()
+            self.next_token()  # skip 'otherwise'
+            self._expect(TokenType.LBRACE)  # expect '{'
+            indent_else = "    " * self.indent_level
+            else_lines.append(f"{indent_else}else:")
             self.indent_level += 1
-            else_lines.append("    " * (self.indent_level - 1) + "else:")
+            # now inside else block
             while self.current_token().token_type != TokenType.RBRACE:
                 tok = self.current_token()
                 if tok.token_type == TokenType.WHEN:
                     else_lines.append(self.parse_when_statement())
+                elif tok.token_type == TokenType.VAL:
+                    else_lines.append(self.parse_val_statement())
+                elif tok.token_type == TokenType.RETURN:
+                    else_lines.append(self.parse_return_statement())
+                elif tok.token_type == TokenType.LOOP:
+                    else_lines.append(self.parse_loop_statement())
+                elif tok.token_type == TokenType.NEXT:
+                    else_lines.append(self.parse_next_statement())
+                elif tok.token_type == TokenType.OUT:
+                    else_lines.append(self.parse_out_statement())
                 else:
                     expr = self.parse_expression_statement()
                     else_lines.append(expr)
             self.indent_level -= 1
-            self.next_token()
+            self.next_token()  # skip '}'
 
         return "\n".join([header] + body_lines + else_lines)
+
+    def parse_loop_statement(self):
+        # current token is 'loop'
+        self.next_token()  # move to '{'
+        if self.current_token().token_type != TokenType.LBRACE:
+            raise Exception("Syntax error: expected '{' after 'loop'")
+        self.next_token()  # skip '{'
+
+        indent = "    " * self.indent_level
+        header = f"{indent}while True:"
+        self.indent_level += 1
+
+        body_lines = []
+        while self.current_token().token_type != TokenType.RBRACE:
+            tok = self.current_token()
+            if tok.token_type == TokenType.WHEN:
+                body_lines.append(self.parse_when_statement())
+            elif tok.token_type == TokenType.VAL:
+                body_lines.append(self.parse_val_statement())
+            elif tok.token_type == TokenType.RETURN:
+                body_lines.append(self.parse_return_statement())
+            elif tok.token_type == TokenType.LOOP:
+                body_lines.append(self.parse_loop_statement())
+            elif tok.token_type == TokenType.NEXT:
+                body_lines.append(self.parse_next_statement())
+            elif tok.token_type == TokenType.OUT:
+                body_lines.append(self.parse_out_statement())
+            else:
+                body_lines.append(self.parse_expression_statement())
+
+        self.indent_level -= 1
+        self.next_token()  # skip '}'
+
+        return "\n".join([header] + body_lines)
+
+    def parse_next_statement(self):
+        # 'next;' -> 'continue'
+        self.next_token()  # move past 'next'
+        if self.current_token().token_type == TokenType.SEMICOLON:
+            self.next_token()
+        indent = "    " * self.indent_level
+        return f"{indent}continue"
+
+    def parse_out_statement(self):
+        # 'out;' -> 'break'
+        self.next_token()  # move past 'out'
+        if self.current_token().token_type == TokenType.SEMICOLON:
+            self.next_token()
+        indent = "    " * self.indent_level
+        return f"{indent}break"
