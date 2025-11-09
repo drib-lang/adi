@@ -79,7 +79,8 @@ class Parser:
             return tok
 
         rhs = "".join([map_literal(tok) for tok in value_tokens])
-        return f"{name} = {rhs}"
+        indent = "    " * self.indent_level
+        return f"{indent}{name} = {rhs}"
 
     def parse_function(self):
         self.next_token()
@@ -107,6 +108,7 @@ class Parser:
             elif tok.token_type == TokenType.WHEN:
                 body_lines.append(self.parse_when_statement())
             elif tok.token_type == TokenType.VAL:
+                self.next_token()
                 body_lines.append(self.parse_val_statement())
             elif tok.token_type == TokenType.LOOP:
                 body_lines.append(self.parse_loop_statement())
@@ -203,6 +205,7 @@ class Parser:
             if tok.token_type == TokenType.WHEN:
                 body_lines.append(self.parse_when_statement())
             elif tok.token_type == TokenType.VAL:
+                self.next_token()
                 body_lines.append(self.parse_val_statement())
             elif tok.token_type == TokenType.RETURN:
                 body_lines.append(self.parse_return_statement())
@@ -232,6 +235,7 @@ class Parser:
                 if tok.token_type == TokenType.WHEN:
                     else_lines.append(self.parse_when_statement())
                 elif tok.token_type == TokenType.VAL:
+                    self.next_token()
                     else_lines.append(self.parse_val_statement())
                 elif tok.token_type == TokenType.RETURN:
                     else_lines.append(self.parse_return_statement())
@@ -266,6 +270,7 @@ class Parser:
             if tok.token_type == TokenType.WHEN:
                 body_lines.append(self.parse_when_statement())
             elif tok.token_type == TokenType.VAL:
+                self.next_token()
                 body_lines.append(self.parse_val_statement())
             elif tok.token_type == TokenType.RETURN:
                 body_lines.append(self.parse_return_statement())

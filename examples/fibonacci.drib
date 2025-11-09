@@ -1,9 +1,39 @@
 fun fibonacci(n) {
-    when(lt(n, "2")) {
-        return n;
+    val a = "0";
+    val b = "1";
+
+    when(lt(n, "0")) {
+        println("Invalid input!");
+        return nil;
     }
 
-    return add(fibonacci(sub(n, "1")), fibonacci(sub(n, "2")));
+    when(eqs(n, "0")) {
+        return "0";
+    }
+
+    when(eqs(n, "1")) {
+        return b;
+    } otherwise {
+        val i = "1";
+
+        loop {
+            when(eqs(i, n)) {
+                out;
+            }
+
+            val c = add(a, b);
+            a = b;
+            b = c;
+            i = add(i, "1");
+        }
+
+        return b;
+    }
 }
 
-println(fibonacci("25"));
+println(fibonacci("0"));
+println(fibonacci("1"));
+println(fibonacci("-1"));
+println(fibonacci("10"));
+println(fibonacci("100"));
+println(fibonacci("200"));
