@@ -1,0 +1,38 @@
+fun bubble_sort(elements) {
+    val i = "0";
+    val si = size(elements);
+    val sj = sub(si, "1");
+
+    loop {
+        when(eqs(i, si)) {
+            out;
+        }
+
+        val j = "0";
+
+        loop {
+            when(eqs(j, sj)) {
+                out;
+            }
+
+            val ei = get(elements, i);
+            val ej = get(elements, j);
+
+            when(lt(ei, ej)) {
+                val tmp = ei;
+                set(elements, i, ej);
+                set(elements, j, tmp);
+            }
+
+            j = add(j, "1");
+        }
+
+        i = add(i, "1");
+    }
+}
+
+val a = list("5", "12", "4", "6", "7", "92", "0", "3", "-8");
+
+println(a);
+bubble_sort(a);
+println(a);
