@@ -26,3 +26,4 @@ jobs:
       - name: Run examples
         run: |
           python src/drib.py examples/fibonacci.drib
+          python src/drib.py examples/bubble_sort.drib

@@ -150,6 +150,22 @@ def print_(*args):
     print(*args, end="")
 
 
+def list_(*args):
+    return list(args)
+
+
+def get(arr, idx):
+    return arr[int(idx)]
+
+
+def set_(arr, idx, value):
+    arr[int(idx)] = value
+
+
+def size(arr):
+    return str(len(arr))
+
+
 env = {
     "add": add,
     "sub": sub,
@@ -165,4 +181,8 @@ env = {
     "not": not_,
     "print": print_,
     "println": println,
+    "list": list_,
+    "get": get,
+    "set": set_,
+    "size": size,
 }
