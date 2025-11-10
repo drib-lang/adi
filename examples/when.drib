@@ -1,8 +1,0 @@
-val a = "5";
-val b = "10";
-
-when(gt(a, b)) {
-    println("a is greater than b");
-} otherwise {
-    println("a is greater than b");
-}
