@@ -10,3 +10,5 @@ val my_image = list(
 
 println("first pixel:", get(get(my_image, "0"), "0"));
 println("first row:", get(my_image, "0"));
+
+imwrite(my_image, "./examples/my_image.png");

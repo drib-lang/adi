@@ -25,4 +25,5 @@ env = {
     "set": set_,
     "size": size,
     "imread": imread,
+    "imwrite": imwrite,
 }
