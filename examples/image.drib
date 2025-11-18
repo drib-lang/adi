@@ -1,0 +1,12 @@
+val img = imread("./examples/colors.png");
+println("first pixel:", get(get(img, "0"), "0"));
+println("first row:", get(img, "0"));
+
+val my_image = list(
+    list(list("255", "20", "10"), list("20", "255", "10"), list("20", "10", "255")),
+    list(list("255", "20", "10"), list("20", "255", "10"), list("20", "10", "255")),
+    list(list("255", "20", "10"), list("20", "255", "10"), list("20", "10", "255")),
+);
+
+println("first pixel:", get(get(my_image, "0"), "0"));
+println("first row:", get(my_image, "0"));

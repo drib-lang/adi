@@ -1,6 +1,7 @@
 from bi.math import *
 from bi.list import *
 from bi.stdio import *
+from bi.image import *
 from bi.logical import *
 
 
@@ -23,4 +24,5 @@ env = {
     "get": get,
     "set": set_,
     "size": size,
+    "imread": imread,
 }
