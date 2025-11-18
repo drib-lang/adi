@@ -36,3 +36,7 @@ def imwrite(pixels: list[list[list[int]]], filename: str):
 
     fmt = filename.split(".")[-1]  # supposing the user does not enter a weird value
     img.write(filename, format=fmt)
+
+
+def zeros(width, height):
+    return [[["0", "0", "0"] for _ in range(int(width))] for _ in range(int(height))]

@@ -26,4 +26,5 @@ env = {
     "size": size,
     "imread": imread,
     "imwrite": imwrite,
+    "zeros": zeros,
 }
