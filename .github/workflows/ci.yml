@@ -24,6 +24,7 @@ jobs:
         run: pytest test -s
       - name: Run examples
         run: |
+          export DISPLAY=:0.0
           python src/drib.py examples/fibonacci.drib
           python src/drib.py examples/bubble_sort.drib
           python src/drib.py examples/invert_image.drib
