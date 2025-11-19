@@ -22,9 +22,8 @@ jobs:
           pip install -r requirements.txt
       - name: Run tests
         run: pytest test -s
-
       - name: Run examples
         run: |
-          python src/drib.py examples/image.drib
           python src/drib.py examples/fibonacci.drib
           python src/drib.py examples/bubble_sort.drib
+          python src/drib.py examples/invert_image.drib
