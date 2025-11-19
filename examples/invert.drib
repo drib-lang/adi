@@ -1,0 +1,32 @@
+val img = imread("./examples/assets/lenna.png");
+val width = size(img);
+val height = size(get(img, "0"));
+val res = zeros(width, height);
+
+val y = "0";
+
+loop {
+    when(eqs(y, sub(height, "1"))) {
+        out;
+    }
+
+    val x = "0";
+
+    loop {
+        when(eqs(x, sub(width, "1"))) {
+            out;
+        }
+
+        val op = get(get(img, y), x);
+        val r = sub("255", get(op, "0"));
+        val g = sub("255", get(op, "1"));
+        val b = sub("255", get(op, "2"));
+
+        set(get(res, y), x, list(r, b, g));
+        x = add(x, "1");
+    }
+
+    y = add(y, "1");
+}
+
+imwrite(res, "./examples/assets/lenna_inverted.png");
