@@ -64,3 +64,11 @@ def eqs(a, b):
 def not_(x):
     """Return logical NOT of x."""
     return not x
+
+
+def and_(a, b):
+    return a and b
+
+
+def or_(a, b):
+    return a or b
