@@ -66,9 +66,9 @@ def not_(x):
     return not x
 
 
-def and_(a, b):
+def et(a, b):
     return a and b
 
 
-def or_(a, b):
+def aut(a, b):
     return a or b
