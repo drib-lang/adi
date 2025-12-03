@@ -17,6 +17,8 @@ env = {
     "geq": geq,
     "leq": leq,
     "eqs": eqs,
+    "et": et,
+    "aut": aut,
     "not": not_,
     "print": print_,
     "println": println,
