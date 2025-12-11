@@ -28,3 +28,12 @@ jobs:
           python src/drib.py examples/fibonacci.drib
           python src/drib.py examples/bubble_sort.drib
           python src/drib.py examples/invert_image.drib
+      - name: Install Drib
+        run: |
+          ln -sf "$PWD/bin/drib" /usr/local/bin/drib
+      - name: Run examples (after install)
+        run: |
+          export DISPLAY=:0.0
+          drib examples/fibonacci.drib
+          drib examples/bubble_sort.drib
+          drib examples/invert_image.drib

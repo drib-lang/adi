@@ -7,7 +7,7 @@
 <p align="center">
     <a href="https://github.com/drib-lang/adi/actions/workflows/ci.yml"><img alt="Code style: black" src="https://github.com/drib-lang/adi/actions/workflows/ci.yml/badge.svg"></a>
     <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
-    <img alt="Drib: 0.6.0" src="https://img.shields.io/badge/drib-0.6.0-6F77D2.svg">
+    <img alt="Drib: 0.7.0" src="https://img.shields.io/badge/drib-0.7.0-6F77D2.svg">
     <img alt="Python: 3.11" src="https://img.shields.io/badge/python-3.11-3572A5.svg">
 </p>
 
@@ -30,14 +30,18 @@ While Drib may look like a normal programming language, it does not support numb
    ```bash
    cd di
    ```
-3. A virtual environment is not required.
+3. Execute the installation script:
+
+    ```bash
+    sudo ln -sf "$PWD/bin/drib" /usr/local/bin/drib
+    ```
 
 ## REPL
 
 To start the Drib REPL, run:
 
 ```bash
-python3 src/drib.py
+drib
 ```
 
 ## Execute a Drib (.drib extension) file
@@ -45,7 +49,7 @@ python3 src/drib.py
 To execute a Drib file, run:
 
 ```bash
-python3 src/drib.py examples/fibonacci.drib
+drib examples/fibonacci.drib
 ```
 
 ## Generate a Python file
@@ -53,7 +57,7 @@ python3 src/drib.py examples/fibonacci.drib
 To generate a Python file, run:
 
 ```bash
-python3 src/drib.py examples/fibonacci.drib -o fibonacci.py
+drib examples/fibonacci.drib -o fibonacci.py
 ```
 
 _This will not execute the code._
