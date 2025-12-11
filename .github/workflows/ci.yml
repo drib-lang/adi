@@ -28,3 +28,6 @@ jobs:
           python src/drib.py examples/fibonacci.drib
           python src/drib.py examples/bubble_sort.drib
           python src/drib.py examples/invert_image.drib
+      - name: Install Drib
+        run: |
+          sudo ln -sf "$PWD/bin/drib" /usr/local/bin/drib
