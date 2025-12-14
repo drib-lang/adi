@@ -29,4 +29,7 @@ env = {
     "imread": imread,
     "imwrite": imwrite,
     "zeros": zeros,
+    "int": int_,
+    "sqrt": sqrt_,
+    "abs": abs_,
 }

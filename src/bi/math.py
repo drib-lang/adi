@@ -1,3 +1,6 @@
+from math import sqrt
+
+
 def parse_number(s):
     """Parse a string as int or float. Raises ValueError if not a number."""
     try:
@@ -88,3 +91,18 @@ def mod(a, b):
         return str(int(result))
     except Exception as e:
         return f"mod error: {e}"
+
+
+def sqrt_(a):
+    return str(sqrt(float(a)))
+
+
+def int_(a):
+    return str(int(float(a)))
+
+
+def abs_(a):
+    try:
+        return str(abs(int(a)))
+    except:
+        return str(abs(float(a)))

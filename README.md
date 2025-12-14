@@ -7,7 +7,7 @@
 <p align="center">
     <a href="https://github.com/drib-lang/adi/actions/workflows/ci.yml"><img alt="Code style: black" src="https://github.com/drib-lang/adi/actions/workflows/ci.yml/badge.svg"></a>
     <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
-    <img alt="Drib: 0.7.0" src="https://img.shields.io/badge/drib-0.7.0-6F77D2.svg">
+    <img alt="Drib: 0.8.0" src="https://img.shields.io/badge/drib-0.8.0-6F77D2.svg">
     <img alt="Python: 3.11" src="https://img.shields.io/badge/python-3.11-3572A5.svg">
 </p>
 
