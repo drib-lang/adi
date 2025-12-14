@@ -1,4 +1,4 @@
-from math import sqrt
+from math import sqrt, isinf, isnan
 
 
 def parse_number(s):
@@ -19,14 +19,24 @@ def parse_two_numbers(a, b):
     return a_num, b_num, is_float
 
 
+def _format_result(result, is_float):
+    """Format number results to JS-like strings for Infinity/NaN."""
+    if isinstance(result, float):
+        if isinf(result):
+            return "Infinity" if result > 0 else "-Infinity"
+        if isnan(result):
+            return "NaN"
+    if is_float:
+        return str(float(result))
+    return str(int(result))
+
+
 def add(a, b):
     """Return the sum of two numbers as a string (int if both ints, else float)."""
     try:
         a_num, b_num, is_float = parse_two_numbers(a, b)
         result = a_num + b_num
-        if is_float:
-            return str(float(result))
-        return str(int(result))
+        return _format_result(result, is_float)
     except Exception as e:
         return f"add error: {e}"
 
@@ -36,9 +46,7 @@ def sub(a, b):
     try:
         a_num, b_num, is_float = parse_two_numbers(a, b)
         result = a_num - b_num
-        if is_float:
-            return str(float(result))
-        return str(int(result))
+        return _format_result(result, is_float)
     except Exception as e:
         return f"sub error: {e}"
 
@@ -48,9 +56,7 @@ def mul(a, b):
     try:
         a_num, b_num, is_float = parse_two_numbers(a, b)
         result = a_num * b_num
-        if is_float:
-            return str(float(result))
-        return str(int(result))
+        return _format_result(result, is_float)
     except Exception as e:
         return f"mul error: {e}"
 
@@ -60,10 +66,16 @@ def div(a, b):
     try:
         a_num, b_num, is_float = parse_two_numbers(a, b)
         if b_num == 0:
-            return "Infinity"
+            try:
+                a_val = float(a_num)
+            except Exception:
+                return "div error: invalid numerator"
+            if isnan(a_val) or a_val == 0:
+                return "NaN"
+            return "Infinity" if a_val > 0 else "-Infinity"
         if is_float:
             result = a_num / b_num
-            return str(float(result))
+            return _format_result(result, True)
         else:
             result = a_num // b_num
             return str(int(result))
@@ -76,9 +88,7 @@ def pow_(a, b):
     try:
         a_num, b_num, is_float = parse_two_numbers(a, b)
         result = a_num**b_num
-        if is_float:
-            return str(float(result))
-        return str(int(result))
+        return _format_result(result, is_float)
     except Exception as e:
         return f"pow error: {e}"
 
@@ -88,23 +98,41 @@ def mod(a, b):
     try:
         a_num, b_num, is_float = parse_two_numbers(a, b)
         result = a_num % b_num
-        if is_float:
-            return str(float(result))
-        return str(int(result))
+        return _format_result(result, is_float)
     except Exception as e:
         return f"mod error: {e}"
 
 
 def sqrt_(a):
-    return str(sqrt(float(a)))
+    try:
+        res = sqrt(float(a))
+        return _format_result(res, True)
+    except Exception:
+        return "NaN"
 
 
 def int_(a):
-    return str(int(float(a)))
+    try:
+        val = float(a)
+        if isinf(val):
+            return "Infinity" if val > 0 else "-Infinity"
+        if isnan(val):
+            return "NaN"
+        return str(int(val))
+    except Exception as e:
+        return f"int error: {e}"
 
 
 def abs_(a):
     try:
         return str(abs(int(a)))
-    except:
-        return str(abs(float(a)))
+    except Exception:
+        try:
+            v = float(a)
+            if isinf(v):
+                return "Infinity" if v > 0 else "Infinity"
+            if isnan(v):
+                return "NaN"
+            return str(abs(v))
+        except Exception as e:
+            return f"abs error: {e}"
