@@ -59,6 +59,8 @@ def div(a, b):
     """Return the division of two numbers as a string (float if either is float, else int division)."""
     try:
         a_num, b_num, is_float = parse_two_numbers(a, b)
+        if b_num == 0:
+            return "Infinity"
         if is_float:
             result = a_num / b_num
             return str(float(result))
